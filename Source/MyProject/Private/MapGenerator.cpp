@@ -10,6 +10,8 @@ AMapGenerator::AMapGenerator()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	//wall->SetStaticMesh(Asset.Object);
 
 }
 
@@ -41,6 +43,9 @@ void AMapGenerator::Caller()
 	UpdateRooms_FromMatrix(Room_Properties, m_id);
 	PrintMatrix(m_id);
 	//PrintMapInfo(Room_Properties);
+	FVector ActorLocation = FVector(0.f, 0.f, 0.f);
+	//spawnWall(ActorLocation);
+	spawnFloor();
 }
 
 TArray<int> AMapGenerator::adjCheck(TArray<TArray<int>>& matrix, int target_y, int target_x) {
@@ -179,6 +184,52 @@ TArray<int> AMapGenerator::GetScale(int target_dimX, int target_dimY)
 	testArr.Add(0);
 	testArr.Add(1);
 	return testArr;
+}
+
+void AMapGenerator::spawnWall(const FVector& Location)
+{
+	
+	AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+	MyNewActor->SetMobility(EComponentMobility::Stationary);
+	MyNewActor->SetActorLocation(Location);
+	UStaticMeshComponent* MeshComponent = MyNewActor->GetStaticMeshComponent();
+	MeshComponent->SetStaticMesh(wall);
+	//static ConstructorHelpers::FObjectFinder<UStaticMesh>Asset(TEXT("StaticMesh'/Game/Models/Test_Block.Test_Block'"));
+	//MeshComponent->SetStaticMesh(Asset.Object);
+	
+	
+}
+
+void AMapGenerator::spawnFloor()
+{
+	FVector ActorLocation = FVector(0.f, 0.f, 0.f);
+	AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+	MyNewActor->SetMobility(EComponentMobility::Stationary);
+	MyNewActor->SetActorLocation(ActorLocation);
+	UStaticMeshComponent* MeshComponent = MyNewActor->GetStaticMeshComponent();
+	MeshComponent->SetStaticMesh(floor);
+	TArray<int> targetDim = { (400 * 3 * 3), (400 * 3 * 3), 100 };
+	scaleObject(MyNewActor, floorDim, targetDim);
+}
+
+void AMapGenerator::scaleObject(AStaticMeshActor* actor, TArray<int>& dimensions, TArray<int>& targetDim)
+{
+	int dimX = dimensions[0];
+	int dimY = dimensions[1];
+	int dimZ = dimensions[2];
+	FString print = FString::FromInt(dimX);
+	UE_LOG(LogTemp, Warning, TEXT("X dimension is : %s"), *print);
+
+	int tarDimX = targetDim[0];
+	int tarDimY = targetDim[1];
+	int tarDimZ = targetDim[2];
+	FString print2 = FString::FromInt(tarDimX);
+	UE_LOG(LogTemp, Warning, TEXT("target X dimension is : %s"), *print2);
+
+	FVector oriScale = actor->GetActorScale3D();
+	FVector scaleVec = FVector(float(tarDimX / dimX), float(tarDimY / dimY), float(tarDimZ / dimZ));
+
+	actor->SetActorScale3D(scaleVec);
 }
 
 void AMapGenerator::InstantiateMatrix(TArray<TArray<int>>& matrix, int rows, int cols, int c_size)

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMeshActor.h"
 #include "MapGenerator.generated.h"
 
 //USTRUCT(BlueprintType)
@@ -97,4 +99,21 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
 		TArray<int> GetScale(int target_dimX, int target_dimY);
+
+	void spawnWall(const FVector& Location);
+
+	void spawnFloor();
+
+	void scaleObject(AStaticMeshActor* actor, TArray<int>& dimensions, TArray<int>& target);
+
+//MESHES AND SHIT
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* wall;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UStaticMesh* floor;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<int> floorDim;
 };
