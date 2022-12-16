@@ -7,7 +7,7 @@
 #include "StaticFurniture_1x1.generated.h"
 
 UCLASS()
-class CPLUSPLUS_PROJECT_API AStaticFurniture_1x1 : public AActor
+class MYPROJECT_API AStaticFurniture_1x1 : public AActor
 {
 	GENERATED_BODY()
 	

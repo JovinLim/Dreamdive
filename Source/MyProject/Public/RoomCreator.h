@@ -7,7 +7,7 @@
 #include "RoomCreator.generated.h"
 
 UCLASS()
-class CPLUSPLUS_PROJECT_API ARoomCreator : public AActor
+class MYPROJECT_API ARoomCreator : public AActor
 {
 	GENERATED_BODY()
 	

@@ -13,7 +13,7 @@ class AStaticFurniture_1x1;
 class Pocket;
 
 UCLASS()
-class CPLUSPLUS_PROJECT_API ARoomEnd : public AActor
+class MYPROJECT_API ARoomEnd : public AActor
 {
 
 	GENERATED_BODY()

@@ -7,7 +7,7 @@
 /**
  * 
  */
-class CPLUSPLUS_PROJECT_API Pocket
+class MYPROJECT_API Pocket
 {
 public:
 
