@@ -21,6 +21,9 @@ ARoomHandler::ARoomHandler()
 void ARoomHandler::BeginPlay()
 {
 	Super::BeginPlay();
+
+	SpawnFloor(true);
+	//SpawnFloor(false);
 	
 }
 
