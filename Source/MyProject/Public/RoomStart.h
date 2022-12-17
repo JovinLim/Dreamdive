@@ -7,7 +7,7 @@
 #include "RoomStart.generated.h"
 
 UCLASS()
-class MYPROJECT_API ARoomStart : public AActor
+class CPLUSPLUS_PROJECT_API ARoomStart : public AActor
 {
 	GENERATED_BODY()
 	

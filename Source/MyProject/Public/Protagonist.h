@@ -7,7 +7,7 @@
 #include "Protagonist.generated.h"
 
 UCLASS()
-class MYPROJECT_API AProtagonist : public ACharacter
+class CPLUSPLUS_PROJECT_API AProtagonist : public ACharacter
 {
 	GENERATED_BODY()
 

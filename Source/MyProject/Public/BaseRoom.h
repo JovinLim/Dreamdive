@@ -9,7 +9,7 @@
 class UBoxComponent;
 
 UCLASS()
-class MYPROJECT_API ABaseRoom : public AActor
+class CPLUSPLUS_PROJECT_API ABaseRoom : public AActor
 {
 	GENERATED_BODY()
 	
