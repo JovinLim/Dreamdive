@@ -36,15 +36,16 @@ void AMapGenerator::Caller()
 	InstantiateMatrix(m_id, y_ax, x_ax, cell_size);
 	PopulateRooms(Room_Properties, m_id, y_ax, x_ax, cell_size);
 	MapRemove(Room_Properties, 10);
-	checkWall(m_id, wallLoc, wallRot);
+	
 
 	UpdateMatrix(Room_Properties, m_id);
 	AddDoors(Room_Properties, m_id);
 	UpdateRooms_FromMatrix(Room_Properties, m_id);
+	checkWall(m_id, wallLoc, wallRot);
 	PrintMatrix(m_id);
 	//PrintMapInfo(Room_Properties);
 	
-	spawnWall();
+	spawnWalls(wallLoc);
 	spawnFloor();
 }
 
@@ -186,17 +187,30 @@ TArray<int> AMapGenerator::GetScale(int target_dimX, int target_dimY)
 	return testArr;
 }
 
-void AMapGenerator::spawnWall()
+void AMapGenerator::spawnWalls(TArray<int>& loc)
 {
-	FVector ActorLocation = FVector(0.f, 0.f, float(floorDim[0]));
-	AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+	TArray<int> xLoc;
+	TArray<int> yLoc;
+	for (int i = 0; i < (loc.Num() / 2); i++) {
+		xLoc.Add(loc[i * 2]);
+		yLoc.Add(loc[(i * 2) + 1]);
+		//UE_LOG(LogTemp, Warning, TEXT("Y : %s"), *(FString::FromInt(loc[(i*2) + 1])));
+		FVector ActorLocation = FVector(float(loc[i * 2] * 10), float((loc[(i * 2) + 1] * 10)), float(floorDim[2]));
+		spawnWall(ActorLocation);
+	}
+}
+
+void AMapGenerator::spawnWall(FVector& Location)
+{
+	//AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
+	AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(Location, FRotator(0,0,0));
 	MyNewActor->SetMobility(EComponentMobility::Stationary);
-	MyNewActor->SetActorLocation(ActorLocation);
+	//MyNewActor->SetActorLocation(Location);
 	UStaticMeshComponent* MeshComponent = MyNewActor->GetStaticMeshComponent();
 	MeshComponent->SetStaticMesh(wall);
-	
-	
 }
+
+
 
 void AMapGenerator::spawnFloor()
 {
@@ -216,13 +230,13 @@ void AMapGenerator::scaleObject(AStaticMeshActor* actor, TArray<int>& dimensions
 	int dimY = dimensions[1];
 	int dimZ = dimensions[2];
 	FString print = FString::FromInt(dimX);
-	UE_LOG(LogTemp, Warning, TEXT("X dimension is : %s"), *print);
+	//UE_LOG(LogTemp, Warning, TEXT("X dimension is : %s"), *print);
 
 	int tarDimX = targetDim[0];
 	int tarDimY = targetDim[1];
 	int tarDimZ = targetDim[2];
 	FString print2 = FString::FromInt(tarDimX);
-	UE_LOG(LogTemp, Warning, TEXT("target X dimension is : %s"), *print2);
+	//UE_LOG(LogTemp, Warning, TEXT("target X dimension is : %s"), *print2);
 
 	FVector oriScale = actor->GetActorScale3D();
 	FVector scaleVec = FVector(float(tarDimX / dimX), float(tarDimY / dimY), float(tarDimZ / dimZ));

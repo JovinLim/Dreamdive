@@ -100,7 +100,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
 		TArray<int> GetScale(int target_dimX, int target_dimY);
 
-	void spawnWall();
+	void spawnWalls(TArray<int>& loc);
+
+	void spawnWall(FVector& Location);
 
 	void spawnFloor();
 
