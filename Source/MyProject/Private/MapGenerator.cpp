@@ -36,7 +36,7 @@ void AMapGenerator::Caller()
 	InstantiateMatrix(m_id, y_ax, x_ax, cell_size);
 	PopulateRooms(Room_Properties, m_id, y_ax, x_ax, cell_size);
 	MapRemove(Room_Properties, 10);
-	//checkWall(m_id, wallLoc, wallRot);
+	checkWall(m_id, wallLoc, wallRot);
 
 	UpdateMatrix(Room_Properties, m_id);
 	AddDoors(Room_Properties, m_id);
@@ -206,7 +206,7 @@ void AMapGenerator::spawnFloor()
 	MyNewActor->SetActorLocation(ActorLocation);
 	UStaticMeshComponent* MeshComponent = MyNewActor->GetStaticMeshComponent();
 	MeshComponent->SetStaticMesh(floor);
-	TArray<int> targetDim = { (400 * 3 * 3), (400 * 3 * 3), 100 };
+	TArray<int> targetDim = { (40 * 3 * 3 * 20), (40 * 3 * 3 * 20), 10 };
 	scaleObject(MyNewActor, floorDim, targetDim);
 }
 
