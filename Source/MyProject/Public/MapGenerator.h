@@ -100,7 +100,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
 		TArray<int> GetScale(int target_dimX, int target_dimY);
 
-	void spawnWall(const FVector& Location);
+	void spawnWall();
 
 	void spawnFloor();
 
@@ -116,4 +116,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<int> floorDim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<int> wallDim;
 };

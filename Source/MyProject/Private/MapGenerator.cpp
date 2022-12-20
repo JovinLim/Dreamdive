@@ -43,8 +43,8 @@ void AMapGenerator::Caller()
 	UpdateRooms_FromMatrix(Room_Properties, m_id);
 	PrintMatrix(m_id);
 	//PrintMapInfo(Room_Properties);
-	FVector ActorLocation = FVector(0.f, 0.f, 0.f);
-	//spawnWall(ActorLocation);
+	
+	spawnWall();
 	spawnFloor();
 }
 
@@ -186,16 +186,14 @@ TArray<int> AMapGenerator::GetScale(int target_dimX, int target_dimY)
 	return testArr;
 }
 
-void AMapGenerator::spawnWall(const FVector& Location)
+void AMapGenerator::spawnWall()
 {
-	
+	FVector ActorLocation = FVector(0.f, 0.f, float(floorDim[0]));
 	AStaticMeshActor* MyNewActor = GetWorld()->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass());
 	MyNewActor->SetMobility(EComponentMobility::Stationary);
-	MyNewActor->SetActorLocation(Location);
+	MyNewActor->SetActorLocation(ActorLocation);
 	UStaticMeshComponent* MeshComponent = MyNewActor->GetStaticMeshComponent();
 	MeshComponent->SetStaticMesh(wall);
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh>Asset(TEXT("StaticMesh'/Game/Models/Test_Block.Test_Block'"));
-	//MeshComponent->SetStaticMesh(Asset.Object);
 	
 	
 }
